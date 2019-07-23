@@ -1,9 +1,10 @@
 # springboot-demoapi
 springboot-demoapi
 
+### terasolunaorg Validation
 * https://terasolunaorg.github.io/guideline/public_review/ArchitectureInDetail/Validation.html
 
-* buildConstraintViolationWithTemplate（）
+### buildConstraintViolationWithTemplate（）
 ```
  ...
  @Override
@@ -21,14 +22,15 @@ public boolean isValid(final String label,
 }
 ```
 
-* customize check annotation
-  * NotBlank p1
+### customize check annotation
+* NotBlank p1
 ```
 com.example.demo.api.comm.validation.NotBlank.java
 ValidationMessages.properties
 com.example.demo.api.comm.validation.NotBlank.message={item} is Not Blank
-```
-  * NotBlank p2
-  ```
+ ```
+* NotBlank p2
+    ```
+ constraintValidatorContext.buildConstraintViolationWithTemplate("{com.example.demo.api.comm.validation.NotBlank.message}")
   com.example.demo.api.comm.validation.NotBlank.message={param} is Not Blank
   ```
