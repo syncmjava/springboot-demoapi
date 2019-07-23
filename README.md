@@ -20,3 +20,15 @@ public boolean isValid(final String label,
      ...
 }
 ```
+
+* customize check annotation
+  * NotBlank p1
+```
+com.example.demo.api.comm.validation.NotBlank.java
+ValidationMessages.properties
+com.example.demo.api.comm.validation.NotBlank.message={item} is Not Blank
+```
+  * NotBlank p2
+  ```
+  com.example.demo.api.comm.validation.NotBlank.message={param} is Not Blank
+  ```
