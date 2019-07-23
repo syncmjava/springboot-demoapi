@@ -10,4 +10,7 @@ public class TestRequest {
     @NotBlank
     private String resStrq;
 
+    @NotBlank(message = "Test field222 is Not Blank")
+    private String resStrq22;
+
 }
