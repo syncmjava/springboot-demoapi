@@ -13,4 +13,7 @@ public class TestRequest {
     @NotBlank(message = "Test field222 is Not Blank")
     private String resStrq22;
 
+    @com.example.demo.api.comm.validation.NotBlank(item = "Test field333")
+    private String resStrq333;
+
 }
