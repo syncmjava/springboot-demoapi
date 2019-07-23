@@ -19,7 +19,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(List.class)
 public @interface NotBlank {
 
-  String message() default "{javax.validation.constraints.NotBlank.message}";
+  String message() default "{com.example.demo.api.comm.validation.NotBlank.message}";
 
   String item() default "";
 
