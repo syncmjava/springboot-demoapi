@@ -9,6 +9,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -95,16 +96,17 @@ public class DataSourceConfigurer {
 
   @Bean
   @ConfigurationProperties(prefix = "mybatis")
-  public SqlSessionFactory sqlSessionFactory(
+  public SqlSessionFactory  sqlSessionFactory(
       @Qualifier("dynamicDataSource") DataSource dynamicDataSource) throws Exception {
-    SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-    sqlSessionFactoryBean.setDataSource(dynamicDataSource);
-    return sqlSessionFactoryBean.getObject();
+    SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
+    factory.setDataSource(dynamicDataSource);
+    factory.setTransactionFactory(new ManagedTransactionFactory());
+    return factory.getObject();
   }
 
-  @Bean
-  public PlatformTransactionManager transactionManager(
-      @Qualifier("dynamicDataSource") DataSource dynamicDataSource) {
-    return new DataSourceTransactionManager(dynamicDataSource);
-  }
+//  @Bean
+//  public PlatformTransactionManager transactionManager(
+//      @Qualifier("dynamicDataSource") DataSource dynamicDataSource) {
+//    return new DataSourceTransactionManager(dynamicDataSource);
+//  }
 }
