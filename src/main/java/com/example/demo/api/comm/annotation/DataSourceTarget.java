@@ -1,4 +1,4 @@
-package com.example.demo.api.infra.datasource.config;
+package com.example.demo.api.comm.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -8,6 +8,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({METHOD})
 @Retention(RUNTIME)
-public @interface DataSourceName {
+public @interface DataSourceTarget {
   String value() default "";
 }

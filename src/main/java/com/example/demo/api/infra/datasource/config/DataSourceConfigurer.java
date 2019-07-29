@@ -3,6 +3,7 @@ package com.example.demo.api.infra.datasource.config;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.example.demo.api.infra.datasource.prop.Db0Properties;
 import com.example.demo.api.infra.datasource.prop.Db1Properties;
+import com.example.demo.api.infra.datasource.prop.Db2Properties;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,7 @@ public class DataSourceConfigurer {
   @NonNull private Db0Properties db0Properties;
 
   @NonNull private Db1Properties db1Properties;
+  @NonNull private Db2Properties db2Properties;
 
   @Bean("db0")
   @Primary
@@ -54,12 +56,25 @@ public class DataSourceConfigurer {
     return dataSource;
   }
 
+  @Bean("db2")
+  public DataSource dataSource2() {
+    DataSource dataSource = null;
+    try {
+      dataSource = DruidDataSourceFactory.createDataSource(db2Properties.getProperties());
+    } catch (Exception e) {
+      log.error("Create DataSource Error : {}", e);
+      throw new RuntimeException();
+    }
+    return dataSource;
+  }
+
   @Bean("dynamicDataSource")
   public DataSource dynamicDataSource() {
     DynamicRoutingDataSource dynamicRoutingDataSource = new DynamicRoutingDataSource();
     Map<Object, Object> dataSourceMap = new HashMap<>();
     dataSourceMap.put("dynamic_db0", dataSource0());
     dataSourceMap.put("dynamic_db1", dataSource1());
+    dataSourceMap.put("dynamic_db2", dataSource2());
     dynamicRoutingDataSource.setDefaultTargetDataSource(dataSource0());
     dynamicRoutingDataSource.setTargetDataSources(dataSourceMap);
 
