@@ -1,1 +1,18 @@
+spring:
+  datasource:
+    db0:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/dynamic_db0?useSSL=false
+      username: root
+      password: 123456
+    db1:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/dynamic_db1?useSSL=false
+      username: root
+      password: 123456
+    db3:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/dynamic_db3?useSSL=false
+      username: root
+      password: 123456
 
