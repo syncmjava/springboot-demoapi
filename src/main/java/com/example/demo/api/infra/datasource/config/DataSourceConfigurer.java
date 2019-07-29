@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.example.demo.api.infra.datasource.prop.Db0Properties;
 import com.example.demo.api.infra.datasource.prop.Db1Properties;
 import com.example.demo.api.infra.datasource.prop.Db2Properties;
+import com.mysql.cj.jdbc.MysqlXADataSource;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -20,6 +22,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 @Slf4j
 @Configuration
@@ -34,13 +37,22 @@ public class DataSourceConfigurer {
   @Bean("db0")
   @Primary
   public DataSource dataSource0() {
-    DataSource dataSource = null;
-    try {
-      dataSource = DruidDataSourceFactory.createDataSource(db0Properties.getProperties());
-    } catch (Exception e) {
-      log.error("Create DataSource Error : {}", e);
-      throw new RuntimeException();
-    }
+//    DataSource dataSource = null;
+//    try {
+//      dataSource = DruidDataSourceFactory.createDataSource(db0Properties.getProperties());
+//    } catch (Exception e) {
+//      log.error("Create DataSource Error : {}", e);
+//      throw new RuntimeException();
+//    }
+    Properties properties =  db0Properties.getProperties2();
+
+    AtomikosDataSourceBean dataSource = new AtomikosDataSourceBean();
+
+    dataSource.setXaDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
+
+    dataSource.setUniqueResourceName(properties.getProperty("url"));
+    dataSource.setXaProperties(properties);
+
     return dataSource;
   }
 

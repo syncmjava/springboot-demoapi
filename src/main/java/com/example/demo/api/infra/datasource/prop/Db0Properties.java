@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 @Data
 @Component
@@ -26,5 +27,15 @@ public class Db0Properties {
     map.put("username", this.getUsername());
     map.put("password", this.getPassword());
     return map;
+  }
+
+  public Properties getProperties2() {
+
+    Properties properties = new Properties();
+    properties.setProperty("user", this.getUsername());
+    properties.setProperty("password", this.getPassword());
+    properties.setProperty("url", this.getUrl());
+
+    return properties;
   }
 }
