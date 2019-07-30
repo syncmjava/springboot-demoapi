@@ -27,63 +27,65 @@ public class DataSourceConfigurer {
   @NonNull private Db0Properties db0Properties;
 
   @NonNull private Db1Properties db1Properties;
+
   @NonNull private Db2Properties db2Properties;
 
   @Bean("db0")
   @Primary
   public DataSource dataSource0() {
-        DataSource dataSource = null;
-        try {
-          dataSource = DruidDataSourceFactory.createDataSource(db0Properties.getProperties());
-        } catch (Exception e) {
-          log.error("Create DataSource Error : {}", e);
-          throw new RuntimeException();
-        }
+    DataSource dataSource = null;
+    try {
+      dataSource = DruidDataSourceFactory.createDataSource(db0Properties.getProperties());
+    } catch (Exception e) {
+      log.error("Create DataSource Error : {}", e);
+      throw new RuntimeException();
+    }
 
     return dataSource;
   }
 
   @Bean("db1")
   public DataSource dataSource1() {
-        DataSource dataSource = null;
-        try {
-          dataSource = DruidDataSourceFactory.createDataSource(db1Properties.getProperties());
-        } catch (Exception e) {
-          log.error("Create DataSource Error : {}", e);
-          throw new RuntimeException();
-        }
+    DataSource dataSource = null;
+    try {
+      dataSource = DruidDataSourceFactory.createDataSource(db1Properties.getProperties());
+    } catch (Exception e) {
+      log.error("Create DataSource Error : {}", e);
+      throw new RuntimeException();
+    }
     return dataSource;
   }
 
   @Bean("db2")
   public DataSource dataSource2() {
-        DataSource dataSource = null;
-        try {
-          dataSource = DruidDataSourceFactory.createDataSource(db2Properties.getProperties());
-        } catch (Exception e) {
-          log.error("Create DataSource Error : {}", e);
-          throw new RuntimeException();
-        }
+    DataSource dataSource = null;
+    try {
+      dataSource = DruidDataSourceFactory.createDataSource(db2Properties.getProperties());
+    } catch (Exception e) {
+      log.error("Create DataSource Error : {}", e);
+      throw new RuntimeException();
+    }
     return dataSource;
   }
 
-//  private DataSource createDataSource(String uniqueResourceName, Properties properties) {
-//
-//    MysqlXADataSource mysqlXADataSource = new MysqlXADataSource();
-//    mysqlXADataSource.setURL(properties.getProperty("url"));
-//    mysqlXADataSource.setUser(properties.getProperty("user"));
-//    mysqlXADataSource.setPassword(properties.getProperty("password"));
-//
-//    AtomikosDataSourceBean dataSource = new AtomikosDataSourceBean();
-//
-//    dataSource.setXaDataSource(mysqlXADataSource);
-//    //    dataSource.setXaDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
-//
-//    dataSource.setUniqueResourceName(uniqueResourceName);
-//    dataSource.setXaProperties(properties);
-//
-//    return dataSource;
-//  }
+  //  private DataSource createDataSource(String uniqueResourceName, Properties properties) {
+  //
+  //    MysqlXADataSource mysqlXADataSource = new MysqlXADataSource();
+  //    mysqlXADataSource.setURL(properties.getProperty("url"));
+  //    mysqlXADataSource.setUser(properties.getProperty("user"));
+  //    mysqlXADataSource.setPassword(properties.getProperty("password"));
+  //
+  //    AtomikosDataSourceBean dataSource = new AtomikosDataSourceBean();
+  //
+  //    dataSource.setXaDataSource(mysqlXADataSource);
+  //    //
+  // dataSource.setXaDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
+  //
+  //    dataSource.setUniqueResourceName(uniqueResourceName);
+  //    dataSource.setXaProperties(properties);
+  //
+  //    return dataSource;
+  //  }
 
   @Bean("dynamicDataSource")
   public DataSource dynamicDataSource() {
@@ -107,6 +109,4 @@ public class DataSourceConfigurer {
 
     return factory.getObject();
   }
-
-
 }
