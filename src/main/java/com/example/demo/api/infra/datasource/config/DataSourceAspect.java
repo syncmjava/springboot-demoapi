@@ -7,11 +7,13 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
 
 import java.lang.reflect.Method;
 
 @Slf4j
 @Aspect
+@Order(2)
 public class DataSourceAspect {
 
   @Pointcut("@annotation(com.example.demo.api.comm.annotation.DataSourceTarget)")
@@ -21,13 +23,13 @@ public class DataSourceAspect {
   public Object proceedAround(ProceedingJoinPoint pjp) throws Throwable {
 
     MethodSignature signature = (MethodSignature) pjp.getSignature();
-      Method method = signature.getMethod();
-      DataSourceTarget dsTarget = method.getAnnotation(DataSourceTarget.class);
-      if (dsTarget==null){
-          DataSourceContextHolder.setDataSourceKey("dynamic_db0");
-      }else{
-          DataSourceContextHolder.setDataSourceKey(dsTarget.value());
-      }
+    Method method = signature.getMethod();
+    DataSourceTarget dsTarget = method.getAnnotation(DataSourceTarget.class);
+    if (dsTarget == null) {
+      DataSourceContextHolder.setDataSourceKey("dynamic_db0");
+    } else {
+      DataSourceContextHolder.setDataSourceKey(dsTarget.value());
+    }
 
     try {
       return pjp.proceed();
