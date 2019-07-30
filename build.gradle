@@ -28,7 +28,7 @@ dependencies {
 	compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.0'
 	compile 'com.alibaba:druid:1.1.19'
 	compile 'org.projectlombok:lombok'
-	compileOnly 'mysql:mysql-connector-java'
+	implementation 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

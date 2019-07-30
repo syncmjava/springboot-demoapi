@@ -1,6 +1,5 @@
 package com.example.demo.api.infra.datasource.config;
 
-import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.example.demo.api.infra.datasource.prop.Db0Properties;
 import com.example.demo.api.infra.datasource.prop.Db1Properties;
 import com.example.demo.api.infra.datasource.prop.Db2Properties;
@@ -17,8 +16,6 @@ import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -38,46 +35,56 @@ public class DataSourceConfigurer {
   @Bean("db0")
   @Primary
   public DataSource dataSource0() {
-//    DataSource dataSource = null;
-//    try {
-//      dataSource = DruidDataSourceFactory.createDataSource(db0Properties.getProperties());
-//    } catch (Exception e) {
-//      log.error("Create DataSource Error : {}", e);
-//      throw new RuntimeException();
-//    }
-    Properties properties =  db0Properties.getProperties2();
+    //    DataSource dataSource = null;
+    //    try {
+    //      dataSource = DruidDataSourceFactory.createDataSource(db0Properties.getProperties());
+    //    } catch (Exception e) {
+    //      log.error("Create DataSource Error : {}", e);
+    //      throw new RuntimeException();
+    //    }
 
-    AtomikosDataSourceBean dataSource = new AtomikosDataSourceBean();
-
-    dataSource.setXaDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
-
-    dataSource.setUniqueResourceName(properties.getProperty("url"));
-    dataSource.setXaProperties(properties);
-
-    return dataSource;
+    return createDataSource("db0", db0Properties.getProperties2());
   }
 
   @Bean("db1")
   public DataSource dataSource1() {
-    DataSource dataSource = null;
-    try {
-      dataSource = DruidDataSourceFactory.createDataSource(db1Properties.getProperties());
-    } catch (Exception e) {
-      log.error("Create DataSource Error : {}", e);
-      throw new RuntimeException();
-    }
-    return dataSource;
+    //    DataSource dataSource = null;
+    //    try {
+    //      dataSource = DruidDataSourceFactory.createDataSource(db1Properties.getProperties());
+    //    } catch (Exception e) {
+    //      log.error("Create DataSource Error : {}", e);
+    //      throw new RuntimeException();
+    //    }
+    return createDataSource("db1", db1Properties.getProperties2());
   }
 
   @Bean("db2")
   public DataSource dataSource2() {
-    DataSource dataSource = null;
-    try {
-      dataSource = DruidDataSourceFactory.createDataSource(db2Properties.getProperties());
-    } catch (Exception e) {
-      log.error("Create DataSource Error : {}", e);
-      throw new RuntimeException();
-    }
+    //    DataSource dataSource = null;
+    //    try {
+    //      dataSource = DruidDataSourceFactory.createDataSource(db2Properties.getProperties());
+    //    } catch (Exception e) {
+    //      log.error("Create DataSource Error : {}", e);
+    //      throw new RuntimeException();
+    //    }
+    return createDataSource("db2", db2Properties.getProperties2());
+  }
+
+  private DataSource createDataSource(String uniqueResourceName, Properties properties) {
+
+    MysqlXADataSource mysqlXADataSource = new MysqlXADataSource();
+    mysqlXADataSource.setURL(properties.getProperty("url"));
+    mysqlXADataSource.setUser(properties.getProperty("user"));
+    mysqlXADataSource.setPassword(properties.getProperty("password"));
+
+    AtomikosDataSourceBean dataSource = new AtomikosDataSourceBean();
+
+    dataSource.setXaDataSource(mysqlXADataSource);
+    //    dataSource.setXaDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
+
+    dataSource.setUniqueResourceName(uniqueResourceName);
+    dataSource.setXaProperties(properties);
+
     return dataSource;
   }
 
@@ -96,7 +103,7 @@ public class DataSourceConfigurer {
 
   @Bean
   @ConfigurationProperties(prefix = "mybatis")
-  public SqlSessionFactory  sqlSessionFactory(
+  public SqlSessionFactory sqlSessionFactory(
       @Qualifier("dynamicDataSource") DataSource dynamicDataSource) throws Exception {
     SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
     factory.setDataSource(dynamicDataSource);
@@ -104,9 +111,9 @@ public class DataSourceConfigurer {
     return factory.getObject();
   }
 
-//  @Bean
-//  public PlatformTransactionManager transactionManager(
-//      @Qualifier("dynamicDataSource") DataSource dynamicDataSource) {
-//    return new DataSourceTransactionManager(dynamicDataSource);
-//  }
+  //  @Bean
+  //  public PlatformTransactionManager transactionManager(
+  //      @Qualifier("dynamicDataSource") DataSource dynamicDataSource) {
+  //    return new DataSourceTransactionManager(dynamicDataSource);
+  //  }
 }
